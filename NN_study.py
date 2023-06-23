@@ -44,6 +44,16 @@ predict = previsao(input_vector, peso_1,bias)
 print(f"A previsão foi: {predict}") # Errou, resultado foi maior q 0.5, ou seja, output = 1
 
 # Calculando erro MSE
-mse = np.square(predict - alvo)
+error = predict - alvo
+mse = np.square(error)
 
 print(f"Previsão {predict}, Erro {mse}")
+
+# Para descobrir se os parâmetros de peso devem aumentar ou diminuir utilizamos a derivada de mse
+# np.square(x) -> 2 * x 
+# Se o valor for positivo o peso deve dimiuir 
+# Se o valor for negativo o peso deve aumentar
+# Ou seja, lembrar do gráfico de np.square(x) -> menor erro tende a X = 0
+
+derivada = 2 * error
+ 
