@@ -55,5 +55,17 @@ print(f"Previsão {predict}, Erro {mse}")
 # Se o valor for negativo o peso deve aumentar
 # Ou seja, lembrar do gráfico de np.square(x) -> menor erro tende a X = 0
 
-derivada = 2 * error
+derivada = 2 * error 
+
+# Como foi um número positivo, vamos subtrair a derivada dos pesos e calcular novamente
+
+peso_1 = peso_1 - derivada
+
+predict = previsao(input_vector, peso_1,bias) # Após a atualização dos pesos, previsão correta, previsão abaixo de 0.5 onde o alvo é 0
+error = predict - alvo
+mse = np.square(error)
+print('\n----------------PESO ATUALIZADO------------------')
+print(f"Previsão {predict}, Erro {mse}")
+
+### Corrigindo valores muito altos que possam sair da derivada ###
  
