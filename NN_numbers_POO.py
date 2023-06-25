@@ -18,7 +18,17 @@ class RedeNeural:
     def _previsao(self,input_array):
         camada_1 = np.dot(input_array, self.pesos) + self.bias
         camada_2 = self._sigmoid(camada_1)
-        return camada_2
+        
+        if camada_2 < 0.30:
+            return 1
+        elif 0.30 < camada_2 < 0.50:
+            return 2
+        elif 0.50 < camada_2 < 0.70:
+            return 3
+        elif 0.70 < camada_2 < 0.90:
+            return 4
+        elif camada_2 > 0.90:
+            return 5
 
     def _calcula_derivadas(self, input_array, alvo):
         camada_1 = np.dot(input_array, self.pesos) + self.bias
@@ -101,10 +111,22 @@ folders = [folder1,folder2,folder3,folder4,folder5]
 
 arrays = []
 alvos = []
+numeros = {}
 for names in folders:
+    number = names.split('\\')[len(names.split('\\'))-1]
+    numeros[number] = []
     for file in os.listdir(names):
-        number = names.split('\\')[len(names.split('\\'))-1]
         arrays.append(img2GrayScaleMatrix(f'{names}\\{file}'))
+        numeros[number].append(img2GrayScaleMatrix(f'{names}\\{file}'))
         alvos.append(int(number))
+alvos = np.array(alvos)/5
+arrays = np.array(arrays)
+rede_neural = RedeNeural(0.1)
+rede_neural._treinar(arrays,alvos,100000)
 
+teste1 = img2GrayScaleMatrix('teste1.jpg')
+teste2 = img2GrayScaleMatrix('teste2.jpg')
+teste3 = img2GrayScaleMatrix('teste3.jpg')
+teste4 = img2GrayScaleMatrix('teste4.jpg')
+teste5 = img2GrayScaleMatrix('teste5.jpg')
 IPython.embed()
